@@ -27,6 +27,7 @@ EOT;
 $modules = Yaml::parse(file_get_contents("$home/.modules.yml"));
 $data_points = [
   new Installs(),
+  new Installs(1),
   new WeekGrowth(),
   new MonthGrowth(),
 ];
