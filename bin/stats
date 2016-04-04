@@ -2,6 +2,7 @@
 <?php
 
 use stats\StatCommand;
+use stats\Stats\MonthGrowth;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Yaml\Yaml;
 use Guzzle\Http\Client;
@@ -27,6 +28,7 @@ $modules = Yaml::parse(file_get_contents("$home/.modules.yml"));
 $data_points = [
   new Installs(),
   new WeekGrowth(),
+  new MonthGrowth(),
 ];
 
 $app = new Application();
