@@ -1,0 +1,35 @@
+#!/usr/bin/env php
+<?php
+
+use stats\StatCommand;
+use Symfony\Component\Console\Application;
+use Symfony\Component\Yaml\Yaml;
+use Guzzle\Http\Client;
+use stats\Stats\WeekGrowth;
+use stats\Stats\Installs;
+
+require __DIR__ . '/../vendor/autoload.php';
+
+$home = $_SERVER['HOME'];
+if (!file_exists("$home/.modules.yml")) {
+  print <<<EOT
+Create a ~/.modules.yml file in the following format to begin:
+
+modules:
+  - module_a
+  - module_b
+
+EOT;
+  return;
+}
+
+$modules = Yaml::parse(file_get_contents("$home/.modules.yml"));
+$data_points = [
+  new Installs(),
+  new WeekGrowth(),
+];
+
+$app = new Application();
+$app->addCommands([new StatCommand(new Client(), $modules['modules'], $data_points)]);
+$app->setDefaultCommand('table');
+$app->run();

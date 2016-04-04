@@ -1,0 +1,15 @@
+{
+    "require": {
+        "symfony/console": "^3.0",
+        "symfony/yaml": "^3.0",
+        "guzzle/guzzle": "^3.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "stats\\" : "src"
+        }
+    },
+    "bin": [
+        "bin/stats"
+    ]
+}
