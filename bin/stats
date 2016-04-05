@@ -1,13 +1,14 @@
 #!/usr/bin/env php
 <?php
 
+use stats\DataPoints\NewInstalls;
 use stats\StatCommand;
-use stats\Stats\MonthGrowth;
+use stats\DataPoints\Growth;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Yaml\Yaml;
 use Guzzle\Http\Client;
-use stats\Stats\WeekGrowth;
-use stats\Stats\Installs;
+use stats\DataPoints\WeekGrowth;
+use stats\DataPoints\Installs;
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -26,10 +27,11 @@ EOT;
 
 $modules = Yaml::parse(file_get_contents("$home/.modules.yml"));
 $data_points = [
-  new Installs(),
-  new Installs(1),
-  new WeekGrowth(),
-  new MonthGrowth(),
+  new NewInstalls(),
+  new Installs('', 0),
+  new Installs('last week', 1),
+  new Growth('last week', 1),
+  new Growth('last month', 4),
 ];
 
 $app = new Application();
