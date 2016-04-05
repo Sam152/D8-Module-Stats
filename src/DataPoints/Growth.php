@@ -40,6 +40,9 @@ class Growth implements DataPointInterface {
    * {@inheritdoc}
    */
   public function getDataPoint($moduleData) {
+    if (empty($moduleData[$this->week][1])) {
+      return 'N/A';
+    }
     return Number::format(((($moduleData[0][1] - $moduleData[$this->week][1]) / $moduleData[$this->week][1]) * 100), '%');
   }
 
