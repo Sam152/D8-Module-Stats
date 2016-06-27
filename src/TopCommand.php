@@ -13,14 +13,17 @@ class TopCommand extends StatCommand {
     $rows = parent::getRows();
     $data = $this->getModuleData();
     $sorted_rows = [];
-    foreach ($rows as $delta => $row) {
+    foreach ($rows as $row) {
       $installs = $data[$row[0]][0][1];
-      // Add the rank.
-      array_unshift($row, $delta+1);
       $sorted_rows[$installs] = $row;
     }
     ksort($sorted_rows);
     $sorted_rows = array_reverse($sorted_rows);
+    $sorted_rows = array_values($sorted_rows);
+
+    foreach ($sorted_rows as $delta => &$sorted_row) {
+      array_unshift($sorted_row, $delta + 1);
+    }
     return $sorted_rows;
   }
 
