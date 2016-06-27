@@ -36,10 +36,24 @@ class StatCommand extends Command {
   protected $stats = [];
 
   /**
+   * Downloaded module data.
+   *
+   * @var array
+   */
+  protected $moduleData = [];
+
+  /**
+   * The name of the command.
+   *
+   * @var string
+   */
+  protected $commandName = 'table';
+
+  /**
    * {@inheritdoc}
    */
   public function __construct(Client $httpClient, $moduleList, $dataPoints) {
-    parent::__construct('table');
+    parent::__construct($this->commandName);
     $this->moduleList = $moduleList;
     $this->httpClient = $httpClient;
     $this->dataPoints = $dataPoints;
@@ -74,11 +88,12 @@ class StatCommand extends Command {
    * Get module data keyed by module name.
    */
   protected function getModuleData() {
-    $moduleData = [];
-    foreach ($this->moduleList as $module) {
-      $moduleData[$module] = $this->downloadModuleData($module);
+    if (empty($this->moduleData)) {
+      foreach ($this->moduleList as $module) {
+        $this->moduleData[$module] = $this->downloadModuleData($module);
+      }
     }
-    return $moduleData;
+    return $this->moduleData;
   }
 
   /**
