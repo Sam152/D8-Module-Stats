@@ -24,6 +24,8 @@ class Growth implements DataPointInterface {
    */
   protected $week;
 
+  protected $total = [];
+
   public function __construct($label, $week) {
     $this->label = $label;
     $this->week = $week;
@@ -41,9 +43,19 @@ class Growth implements DataPointInterface {
    */
   public function getDataPoint($moduleData) {
     if (empty($moduleData[$this->week][1])) {
+      $this->total[] = 0;
       return 'N/A';
     }
-    return Number::format(((($moduleData[0][1] - $moduleData[$this->week][1]) / $moduleData[$this->week][1]) * 100), '%');
+    $data = ((($moduleData[0][1] - $moduleData[$this->week][1]) / $moduleData[$this->week][1]) * 100);
+    $this->total[] = $data;
+    return Number::format($data, '%');
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getTotal() {
+    return Number::format(array_sum($this->total) / count($this->total), '%');
   }
 
 }

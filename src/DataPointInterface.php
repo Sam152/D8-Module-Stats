@@ -24,4 +24,12 @@ interface DataPointInterface {
    */
   public function getDataPoint($moduleData);
 
+  /**
+   * Gets the total for the data point.
+   *
+   * @return float
+   *   The total.
+   */
+  public function getTotal();
+
 }

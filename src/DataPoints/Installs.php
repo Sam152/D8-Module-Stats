@@ -10,6 +10,8 @@ use stats\Number;
  */
 class Installs implements DataPointInterface {
 
+  protected $total = 0;
+
   /**
    * Which week to grab installs from.
    *
@@ -33,7 +35,15 @@ class Installs implements DataPointInterface {
    * {@inheritdoc}
    */
   public function getDataPoint($moduleData) {
+    $this->total += $moduleData[$this->week][1];
     return Number::format($moduleData[$this->week][1]);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getTotal() {
+    return Number::format($this->total);
   }
 
 }

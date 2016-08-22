@@ -81,6 +81,13 @@ class StatCommand extends Command {
         $row[] = $stat->getDataPoint($moduleData);
       }
     }
+
+    $total_row = ['Total'];
+    foreach ($this->dataPoints as $stat) {
+      $total_row[] = $stat->getTotal();
+    }
+    $rows[] = $total_row;
+
     return $rows;
   }
 
