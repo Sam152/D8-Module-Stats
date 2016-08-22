@@ -10,6 +10,8 @@ use stats\Number;
  */
 class NewInstalls implements DataPointInterface {
 
+  protected $total = 0;
+
   /**
    * {@inheritdoc}
    */
@@ -22,8 +24,16 @@ class NewInstalls implements DataPointInterface {
    */
   public function getDataPoint($moduleData) {
     $installs = $moduleData[0][1] - $moduleData[1][1];
+    $this->total += $installs;
     $prefix = $installs > 0 ? '+' : '';
     return $prefix . Number::format($installs);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getTotal() {
+    return Number::format($this->total);
   }
 
 }
