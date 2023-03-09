@@ -7,7 +7,7 @@ use stats\DataPoints\Growth;
 use stats\TopCommand;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Yaml\Yaml;
-use Guzzle\Http\Client;
+use GuzzleHttp\Client;
 use stats\DataPoints\WeekGrowth;
 use stats\DataPoints\Installs;
 
@@ -38,7 +38,7 @@ $data_points = [
 $app = new Application();
 $app->addCommands([
   new StatCommand(new Client(), $modules['modules'], $data_points),
-  new TopCommand(new Client(), $modules['top'], $data_points),
+//  new TopCommand(new Client(), $modules['top'], $data_points),
 ]);
 
 $app->setDefaultCommand('table');

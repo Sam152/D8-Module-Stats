@@ -52,7 +52,7 @@ class StatCommand extends Command {
   /**
    * {@inheritdoc}
    */
-  public function __construct(Client $httpClient, $moduleList, $dataPoints) {
+  public function __construct(\GuzzleHttp\Client $httpClient, $moduleList, $dataPoints) {
     parent::__construct($this->commandName);
     $this->moduleList = $moduleList;
     $this->httpClient = $httpClient;
@@ -113,7 +113,9 @@ class StatCommand extends Command {
    *   An array of data points.
    */
   protected function downloadModuleData($module) {
-    $response = $this->httpClient->get(sprintf('https://www.drupal.org/project/usage/%s', $module))->send();
+    $response = $this->httpClient->get(sprintf('https://www.drupal.org/project/usage/%s', $module));
+
+//    $response->send();
     preg_match('/{"label":"8\.x","data":(?<json>.*?)},/', $response->getBody(), $matches);
     return array_reverse(json_decode($matches['json']));
   }

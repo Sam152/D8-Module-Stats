@@ -1,8 +1,10 @@
 {
+    "name": "sam152/d8modulestats",
+    "type": "application",
     "require": {
         "symfony/console": "^3.0",
         "symfony/yaml": "^3.0",
-        "guzzle/guzzle": "^3.9"
+        "guzzlehttp/guzzle": "^5"
     },
     "autoload": {
         "psr-4": {
